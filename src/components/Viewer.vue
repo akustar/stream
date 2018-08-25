@@ -41,16 +41,27 @@
         })
 
         stream.startTorrent(this.torrentId)
-        .then(torrent => {
-          this.setProps({
-            torrent,
-            state: 'start'
+        .then(this.onTorrent)
+        .catch(this.onTorrentError)
+      },
+
+      onTorrent (torrent) {
+        this.setProps({
+          torrent,
+          state: 'start'
+        })
+
+        torrent.files.forEach(file => {
+          file.appendTo('.viewer')
+          file.getBlobURL((err, url) => {
+            console.log('done')
           })
         })
-        .catch(err => {
-          this.setProps({
-            state: 'wait'
-          })
+      },
+
+      onTorrentError (err) {
+        this.setProps({
+          state: 'wait'
         })
       },
 
@@ -62,7 +73,7 @@
   }
 </script>
 
-<style scoped>
+<style>
   .viewer {
     position: relative;
     width: 100%;

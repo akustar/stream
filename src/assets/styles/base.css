@@ -60,6 +60,7 @@ button {
   border: none;
   user-select: none;
   background-color: transparent;
+  outline: none;
 }
 
 svg {

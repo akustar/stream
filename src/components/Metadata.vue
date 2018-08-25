@@ -10,6 +10,14 @@
         <a :href="torrent.torrentFileBlobURL " target="_blank" :download="torrent.name + '.torrent'">[Download.torrent]</a>
       </div>
     </div>
+    <div>
+      <span>{{ metadata.percent }}</span>
+      <span>{{ metadata.downloaded }}</span>
+      <span>{{ metadata.total }}</span>
+      <span>{{ metadata.downloadSpeed }}</span>
+      <span>{{ metadata.uploadSpeed }}</span>
+      <span>{{ metadata.numPeers }}</span>
+    </div>
   </div>
 </template>
 
@@ -31,13 +39,8 @@
       setInterval(this.updateTorrentProgress, 1000)
     },
     methods: {
-      updateTorrentProgress () {
-        this.setProps({
-          metadata: stream.getTorrentProgress()
-        })
-      },
-
       sharesLink () {
+        //  Chrome 61 API
         if (navigator.share) {
           navigator.share({
             title: 'stream',
@@ -46,6 +49,15 @@
           })
           .then(() => console.log('Successful share'))
           .catch((error) => console.log('Error sharing', error))
+        }
+      },
+
+      updateTorrentProgress () {
+        const metadata = stream.getTorrentProgress()
+        if (metadata) {
+          this.setProps({
+            metadata: stream.getTorrentProgress()
+          })
         }
       }
     }
