@@ -7,9 +7,14 @@
     </wt-viewer>
     <wt-metadata
       :torrent="torrent"
+      :state="state"
       :metadata.sync="metadata"
     >
     </wt-metadata>
+    <wt-files
+      :torrent="torrent"
+    >
+    </wt-files>
   </div>
 </template>
 
@@ -17,6 +22,7 @@
   // components
   import Viewer from './Viewer.vue'
   import Metadata from './Metadata.vue'
+  import Files from './Files.vue'
 
   export default {
     data() {
@@ -26,14 +32,10 @@
         metadata: null
       }
     },
-    mounted () {
-    },
-    methods: {
-
-    },
     components: {
       'wt-viewer': Viewer,
-      'wt-metadata': Metadata
+      'wt-metadata': Metadata,
+      'wt-files': Files
     }
   }
 </script>

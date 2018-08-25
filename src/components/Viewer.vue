@@ -12,6 +12,7 @@
   import stream from '../lib/stream'
 
   export default {
+    name: 'viewer',
     props: {
       state: {
         type: String,
@@ -24,6 +25,7 @@
     },
     data() {
       return {
+        // 08ada5a7a6183aae1e09d831df6748d566095a10
         torrentId: this.searchParams(
           'infohash'
         )
@@ -41,27 +43,17 @@
         })
 
         stream.startTorrent(this.torrentId)
-        .then(this.onTorrent)
-        .catch(this.onTorrentError)
-      },
-
-      onTorrent (torrent) {
-        this.setProps({
-          torrent,
-          state: 'start'
-        })
-
-        torrent.files.forEach(file => {
-          file.appendTo('.viewer')
-          file.getBlobURL((err, url) => {
-            console.log('done')
+        .then(torrent => {
+          console.log(torrent)
+          this.setProps({
+            torrent,
+            state: 'start'
           })
         })
-      },
-
-      onTorrentError (err) {
-        this.setProps({
-          state: 'wait'
+        .catch(err => {
+          this.setProps({
+            state: 'wait'
+          })
         })
       },
 

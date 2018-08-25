@@ -5,7 +5,7 @@
     </div>
     <div>
       <div class="shares">
-        <a href="#!" @click.prevent="sharesLink">[Share link]</a>
+        <a @click.prevent="sharesLink">[Share link]</a>
         <a :href="torrent.magnetURI" target="_blank">[Magnet URI]</a>
         <a :href="torrent.torrentFileBlobURL " target="_blank" :download="torrent.name + '.torrent'">[Download.torrent]</a>
       </div>
@@ -26,6 +26,10 @@
 
   export default {
     props: {
+      state: {
+        type: String,
+        default: 'wait'
+      },
       torrent: {
         type: Object,
         default: null
@@ -50,6 +54,9 @@
           .then(() => console.log('Successful share'))
           .catch((error) => console.log('Error sharing', error))
         }
+        else {
+          
+        }
       },
 
       updateTorrentProgress () {
@@ -64,7 +71,7 @@
   }
 </script>
 
-<style scoped>
+<style>
   .metadata {
     padding: 20px 0 8px 0;
   }
@@ -93,15 +100,6 @@
 
   .shares > a:first-child {
     padding-left: 0;
-  }
-
-  .files {
-    width: 100%;
-  }
-
-  .files h4 {
-    font-size: 12px;
-    font-weight: 400;
   }
 
   @media (max-width: 1088px) {
