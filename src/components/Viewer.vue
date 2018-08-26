@@ -44,11 +44,13 @@
 
         stream.startTorrent(this.torrentId)
         .then(torrent => {
-          console.log(torrent)
           this.setProps({
             torrent,
             state: 'start'
           })
+          
+          const file = torrent.files[0]
+          file.appendTo('.viewer')
         })
         .catch(err => {
           this.setProps({

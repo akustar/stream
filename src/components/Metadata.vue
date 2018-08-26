@@ -5,9 +5,9 @@
     </div>
     <div>
       <div class="shares">
-        <a @click.prevent="sharesLink">[Share link]</a>
+        <a @click.prevent="shareLink">[Share link]</a>
         <a :href="torrent.magnetURI" target="_blank">[Magnet URI]</a>
-        <a :href="torrent.torrentFileBlobURL " target="_blank" :download="torrent.name + '.torrent'">[Download.torrent]</a>
+        <a :href="torrent.torrentFileBlobURL" target="_blank" :download="torrent.name + '.torrent'">[Download.torrent]</a>
       </div>
     </div>
     <div>
@@ -43,13 +43,13 @@
       setInterval(this.updateTorrentProgress, 1000)
     },
     methods: {
-      sharesLink () {
+      shareLink () {
         //  Chrome 61 API
         if (navigator.share) {
           navigator.share({
             title: 'stream',
             text: this.torrent.name,
-            url: 'https://dist-cwoueyvbym.now.sh/',
+            url: `${location.href}?infohash=${torrent.infohash}`,
           })
           .then(() => console.log('Successful share'))
           .catch((error) => console.log('Error sharing', error))
@@ -63,7 +63,7 @@
         const metadata = stream.getTorrentProgress()
         if (metadata) {
           this.setProps({
-            metadata: stream.getTorrentProgress()
+            metadata
           })
         }
       }
