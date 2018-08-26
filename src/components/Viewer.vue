@@ -48,7 +48,7 @@
             torrent,
             state: 'start'
           })
-          
+
           const file = torrent.files[0]
           file.appendTo('.viewer')
         })
