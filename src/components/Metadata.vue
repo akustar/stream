@@ -18,6 +18,7 @@
       <span>{{ metadata.uploadSpeed }}</span>
       <span>{{ metadata.numPeers }}</span>
     </div>
+    <input type="text" class="sr-only" readonly ref="clipboard">
   </div>
 </template>
 
@@ -49,13 +50,13 @@
           navigator.share({
             title: 'stream',
             text: this.torrent.name,
-            url: `${location.href}?infohash=${torrent.infohash}`,
+            url: `${location.href}?infohash=${this.torrent.infoHash}`,
           })
           .then(() => console.log('Successful share'))
           .catch((error) => console.log('Error sharing', error))
         }
         else {
-          
+          this.copyLinkToClipboard()
         }
       },
 
@@ -66,6 +67,19 @@
             metadata
           })
         }
+      },
+
+      copyLinkToClipboard () {
+        this.$refs.clipboard.value = `${location.href}?infohash=${this.torrent.infoHash}`
+        this.$refs.clipboard.select()
+        document.execCommand('copy')
+
+        this.$toasted.show('클립보드에 복사되었습니다', {
+          action: {
+            text: '확인',
+            onClick: (event, toastObject) => toastObject.goAway(0)
+          }
+        })        
       }
     }
   }

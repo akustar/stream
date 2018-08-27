@@ -48,20 +48,28 @@
             torrent,
             state: 'start'
           })
-
-          const file = torrent.files[0]
-          file.appendTo('.viewer')
         })
         .catch(err => {
           this.setProps({
             state: 'wait'
           })
+          this.toasted('error', err.message)
         })
       },
 
       searchParams (param) {
         const url = new URL(window.location.href)
         return url.searchParams.get(param) || ''
+      },
+
+      toasted (type, message) {
+        this.$toasted.show(message, {
+          type,
+          action: {
+            text: '확인',
+            onClick: (event, toastObject) => toastObject.goAway(0)
+          }
+        })
       }
     }
   }
