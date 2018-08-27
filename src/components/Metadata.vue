@@ -49,8 +49,7 @@
         if (navigator.share) {
           navigator.share({
             title: 'stream',
-            text: this.torrent.name,
-            url: `${location.href}?infohash=${this.torrent.infoHash}`,
+            text: this.torrent.name
           })
           .then(() => console.log('Successful share'))
           .catch((error) => console.log('Error sharing', error))
@@ -79,7 +78,7 @@
             text: '확인',
             onClick: (event, toastObject) => toastObject.goAway(0)
           }
-        })        
+        })
       }
     }
   }
