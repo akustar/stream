@@ -1,7 +1,7 @@
 <template>
   <div class="viewer">
     <form class="form" v-if="state === 'wait'" @submit.prevent="startTorrent">
-      <input type="text" v-model="torrentId" placeholder="Magnet:" autofocus>
+      <input type="text" v-model="torrentId" @paste="onPaste" placeholder="Magnet:" autofocus>
       <button type="submit" class="icon-button"><i class="material-icons">get_app</i></button>
     </form>
     <span class="spinner" v-if="state === 'ready'"></span>
@@ -25,7 +25,6 @@
     },
     data() {
       return {
-        // 08ada5a7a6183aae1e09d831df6748d566095a10
         torrentId: this.searchParams(
           'infohash'
         )
@@ -53,8 +52,14 @@
           this.setProps({
             state: 'wait'
           })
-          this.toasted('error', err.message)
+          const errorMessage = `에러: ${err.message}`
+          this.toasted('error', errorMessage)
         })
+      },
+
+      onPaste (event) {
+        this.torrentId = event.clipboardData.getData('text')
+        this.startTorrent()
       },
 
       searchParams (param) {

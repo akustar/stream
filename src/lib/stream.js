@@ -32,6 +32,11 @@ function startTorrent (torrentId) {
   return new Promise((resolve, reject) => {
     const torrent = client.add(torrentId, torrentOpts, resolve)
     torrent.on('error', reject)
+    torrent.on('done', () => {
+      // 웹 사이트 성능을 고려하여 다운로드가 완료되면
+      // 새로 들어오는 피어의 연결을 중지 합니다
+      torrent.pause()
+    })
   })
 }
 
