@@ -52,8 +52,9 @@
           this.setProps({
             state: 'wait'
           })
-          const errorMessage = `에러: ${err.message}`
-          this.toasted('error', errorMessage)
+
+          const errMessage = `에러: ${err.message}`
+          this.toasted('error', errMessage)
         })
       },
 

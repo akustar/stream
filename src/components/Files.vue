@@ -8,11 +8,12 @@
           <col style="">
         </colgroup>
         <tbody>
-          <tr v-for="file in torrent.files" :key="file.name" @click="appendViewerFile(file)">
+          <tr v-for="file in torrent.files" :key="file.name">
             <td>
-              <button class="icon-bitton"><i class="material-icons">{{ getMaterialIcon(file) }}</i></button>
+              <button class="icon-bitton"
+                @click="appendViewerFile(file)"><i class="material-icons">{{ getMaterialIcon(file) }}</i></button>
             </td>
-            <td class="text-left">{{ file.name }}</td>
+            <td class="text-left" @click="offlineSaveFile(file)">{{ file.name }}</td>
             <td class="text-right">{{ prettyBytes(file.length) }}</td>
           </tr>
         </tbody>
@@ -24,6 +25,8 @@
 <script>
   import prettyBytes from '../lib/pretty-bytes'
   import fileExtension from '../lib/file-extension'
+  
+  console.log(1)
 
   export default {
     name: 'files',
@@ -38,6 +41,14 @@
         const viewer = document.querySelector('.viewer')
         viewer.innerHTML = ''
         file.appendTo(viewer)
+      },
+
+      offlineSaveFile (file) {
+        console.log(file.downloaded, file.length)
+        file.getBlobURL((err, url) => {
+          if (err) return console.err(err)
+          console.log(url)
+        })
       },
 
       getMaterialIcon (file) {

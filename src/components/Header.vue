@@ -3,6 +3,7 @@
     <h1 class="branding"><a href="/" class="logo">stream</a></h1>
     <div class="actions">
       <a href="#!" v-if="isDesktop">데스크탑 다운로드</a>
+      <a href="#!" v-if="!isDesktop && !isStandalone">홈 화면에 추가</a>
       <button type="button" class="icon-button"><i class="material-icons">more_vert</i></button>
     </div>
   </div>
@@ -12,7 +13,8 @@
   export default {
     data() {
       return {
-        isDesktop: window.ontouchstart !== null
+        isDesktop: window.ontouchstart !== null,
+        isStandalone: window.matchMedia('(display-mode: standalone)').matches
       }
     },
   }
@@ -25,9 +27,9 @@
     justify-content: space-between;
     width: 100%;
     height: 64px;
-    padding: 10px 8px 10px 16px;
+    padding: 0 8px 0 16px;
     background-color: #fff;
-    box-shadow: inset 0 -1px 0 0 rgba(0,0,0,0.12);
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 4px 0px;
   }
 
   .branding {
@@ -64,13 +66,12 @@
 
   @media (max-width: 1088px) {
     .header {
-      height: 48px;
-      padding: 10px 8px;
+      height: 56px;
+      padding: 0 6px 0 12px;
     }
     .branding > a.logo {
-      font-size: 20px;
-      background-size: 24px auto;
-      padding-left: 28px;
+      font-size: 22px;
+      background-size: 26px auto;
     }
     .actions .icon-button {
       padding: 4px;

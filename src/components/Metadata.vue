@@ -45,7 +45,6 @@
     },
     methods: {
       shareLink () {
-        //  Chrome 61 API
         if (navigator.share) {
           navigator.share({
             title: 'stream',
