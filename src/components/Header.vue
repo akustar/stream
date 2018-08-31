@@ -67,7 +67,7 @@
   @media (max-width: 1088px) {
     .header {
       height: 56px;
-      padding: 0 6px 0 12px;
+      padding: 0 12px 0 6px;
     }
     .branding > a.logo {
       font-size: 22px;
