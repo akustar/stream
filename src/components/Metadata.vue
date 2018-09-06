@@ -4,19 +4,19 @@
       <h3>{{ torrent.name }}</h3>
     </div>
     <div>
-      <div class="shares">
-        <a @click.prevent="shareLink">[Share link]</a>
-        <a :href="torrent.magnetURI" target="_blank">[Magnet URI]</a>
-        <a :href="torrent.torrentFileBlobURL" target="_blank" :download="torrent.name + '.torrent'">[Download.torrent]</a>
-      </div>
-    </div>
-    <div>
       <span>{{ metadata.percent }}</span>
       <span>{{ metadata.downloaded }}</span>
       <span>{{ metadata.total }}</span>
       <span>{{ metadata.downloadSpeed }}</span>
       <span>{{ metadata.uploadSpeed }}</span>
       <span>{{ metadata.numPeers }}</span>
+    </div>
+    <div>
+      <div class="shares">
+        <a @click.prevent="shareLink">[Share link]</a>
+        <a :href="torrent.magnetURI" target="_blank">[Magnet URI]</a>
+        <a :href="torrent.torrentFileBlobURL" target="_blank" :download="torrent.name + '.torrent'">[Download.torrent]</a>
+      </div>
     </div>
     <input type="text" class="sr-only" readonly ref="clipboard">
   </div>
@@ -69,6 +69,7 @@
 
       copyLinkToClipboard () {
         this.$refs.clipboard.value = `${location.href}?infohash=${this.torrent.infoHash}`
+        
         this.$refs.clipboard.select()
         document.execCommand('copy')
 
